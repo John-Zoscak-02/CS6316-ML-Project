@@ -4,6 +4,8 @@ import ctypes as ct
 import cv2
 import sys
 import os
+import pandas as pd
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 showsz=800
 mousex,mousey=0.5,0.5
@@ -156,6 +158,12 @@ def showpoints(xyz,c_gt=None, c_pred = None ,waittime=0,showrot=False,magnifyBlu
             break
     return cmd
 if __name__=='__main__':
+    if (len(sys.argv) > 0): 
+       filename = str(sys.argv[1])
+       dataset_path = "../data/modelnet40_normal_resampled/%s"%filename
+       xyz = np.genfromtxt(dataset_path, delimiter=",")[:,:3] 
+       print(xyz)
+
     np.random.seed(100)
-    showpoints(np.random.randn(2500,3))
+    showpoints(xyz, ballradius=2)
 
